@@ -1,0 +1,30 @@
+{
+  "name": "modern-wp-with-react",
+  "version": "0.0.1",
+  "description": "A modern WordPress theme using React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efuller/modern-wp-with-react.git"
+  },
+  "author": "Eric Fuller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/efuller/modern-wp-with-react/issues"
+  },
+  "homepage": "https://github.com/efuller/modern-wp-with-react#readme",
+  "dependencies": {
+    "webpack": "^1.12.15"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "node-sass": "^3.4.2",
+    "sass-loader": "^3.2.0"
+  }
+}
