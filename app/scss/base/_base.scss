@@ -1,0 +1,9 @@
+body {
+	background: dodgerblue;
+}
+
+#app {
+	@include outer-container;
+
+	background: cornflowerblue;
+}

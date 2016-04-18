@@ -1,0 +1,8 @@
+@import "bourbon"; // or "bourbon" when in Rails
+@import "neat-helpers"; // or "neat-helpers" when in Rails
+
+// Change the grid settings
+$column: 60px;
+$gutter: 10px;
+$grid-columns: 12;
+$max-width: 960px;
