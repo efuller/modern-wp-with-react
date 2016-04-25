@@ -69,16 +69,22 @@
 
 	var _reduxThunk = __webpack_require__(255);
 
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reducers = __webpack_require__(256);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
 	var _containers = __webpack_require__(226);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Apply redux middleware
-	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk.reduxThunk)(_redux.createStore);
+
 
 	// Redux
-
-	var store = createStoreWithMiddleware(reducers); // create the store
+	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+	var store = createStoreWithMiddleware(_reducers2.default); // create the store
 
 	// Styles
 	var styles = __webpack_require__(229);
@@ -27649,6 +27655,50 @@
 	    };
 	  };
 	}
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _redux = __webpack_require__(237);
+
+	var _postsReducer = __webpack_require__(257);
+
+	var _postsReducer2 = _interopRequireDefault(_postsReducer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var rootReducer = (0, _redux.combineReducers)({
+	    posts: _postsReducer2.default
+	});
+
+	exports.default = rootReducer;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function () {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_STATE : arguments[0];
+	    var action = arguments[1];
+
+
+	    return state;
+	};
+
+	var INITIAL_STATE = {};
 
 /***/ }
 /******/ ]);

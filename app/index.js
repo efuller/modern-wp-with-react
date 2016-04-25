@@ -5,7 +5,8 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 // Redux
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { reduxThunk } from 'redux-thunk';
+import reduxThunk from 'redux-thunk';
+import reducers from './reducers';
 
 // Apply redux middleware
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
