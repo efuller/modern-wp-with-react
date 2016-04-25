@@ -2,6 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
+// Redux
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { reduxThunk } from 'redux-thunk';
+
+// Apply redux middleware
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+const store = createStoreWithMiddleware(reducers); // create the store
+
 // Styles
 var styles = require('./scss/style.scss');
 
@@ -11,8 +20,10 @@ import {
     HomeContainer } from './containers';
 
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path="/" component={MainContainer}>
-            <IndexRoute component={HomeContainer} />
-        </Route>
-    </Router>, document.getElementById("app"));
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={MainContainer}>
+                <IndexRoute component={HomeContainer} />
+            </Route>
+        </Router>
+    </Provider>, document.getElementById("app"));
