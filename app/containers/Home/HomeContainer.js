@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class HomeContainer {
+class HomeContainer extends Component {
     render() {
         return (
             <div>
