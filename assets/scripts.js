@@ -25805,9 +25805,17 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var MainContainer = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MainContainer = function (_Component) {
+	    _inherits(MainContainer, _Component);
+
 	    function MainContainer() {
 	        _classCallCheck(this, MainContainer);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(MainContainer).apply(this, arguments));
 	    }
 
 	    _createClass(MainContainer, [{
@@ -25826,7 +25834,7 @@
 	    }]);
 
 	    return MainContainer;
-	}();
+	}(_react.Component);
 
 	exports.default = MainContainer;
 
@@ -25850,9 +25858,17 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var HomeContainer = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HomeContainer = function (_Component) {
+	    _inherits(HomeContainer, _Component);
+
 	    function HomeContainer() {
 	        _classCallCheck(this, HomeContainer);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(HomeContainer).apply(this, arguments));
 	    }
 
 	    _createClass(HomeContainer, [{
@@ -25871,7 +25887,7 @@
 	    }]);
 
 	    return HomeContainer;
-	}();
+	}(_react.Component);
 
 	exports.default = HomeContainer;
 
