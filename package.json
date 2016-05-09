@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/efuller/modern-wp-with-react#readme",
   "dependencies": {
+    "axios": "^0.11.0",
     "babel-preset-stage-1": "^6.5.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
