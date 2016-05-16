@@ -9,7 +9,6 @@ export function fetchPosts() {
             headers: { 'X-WP-Nonce': WP_API.nonce }
         })
             .then(response => {
-                //console.log(response.data);
                 dispatch({
                     type: FETCH_POSTS,
                     payload: response.data
