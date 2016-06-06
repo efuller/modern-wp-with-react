@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { Link } from 'react-router';
 
 class PostList extends Component {
     componentWillMount() {
@@ -17,7 +18,9 @@ class PostList extends Component {
         return this.props.posts.posts.map((post) => {
             return (
                 <div key={post.id}>
-                    <h3>{post.title.rendered}</h3>
+                   <Link to={"post/" + post.slug}>
+                        <h3>{post.title.rendered}</h3>
+                   </Link>
                 </div>
             )
         })
