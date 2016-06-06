@@ -18,7 +18,7 @@ class PostList extends Component {
         return this.props.posts.posts.map((post) => {
             return (
                 <div key={post.id}>
-                   <Link to={"post/" + post.slug}>
+                   <Link to={post.slug}>
                         <h3>{post.title.rendered}</h3>
                    </Link>
                 </div>
