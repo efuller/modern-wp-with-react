@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
+import routes from './routes';
 
 // Apply redux middleware
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
@@ -22,9 +23,5 @@ import {
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path="/" component={MainContainer}>
-                <IndexRoute component={HomeContainer} />
-            </Route>
-        </Router>
+        <Router history={browserHistory} routes={routes} />
     </Provider>, document.getElementById("app"));
