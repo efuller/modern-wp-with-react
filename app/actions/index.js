@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { FETCH_POSTS } from './types';
+import {
+    FETCH_POSTS,
+    FETCH_POST } from './types';
 
 const ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
 
@@ -14,5 +16,20 @@ export function fetchPosts() {
                     payload: response.data
                 });
             });
+    }
+}
+
+export function fetchPost(slug) {
+    return function(dispatch) {
+        axios.get(`${ROOT_URL}/posts`, {
+            headers: { 'X-WP-Nonce': WP_API.nonce },
+            filter: { 'name': slug }
+        })
+            .then(response => {
+                dispatch({
+                    type: FETCH_POST,
+                    payload: response.data
+                })
+            })
     }
 }
