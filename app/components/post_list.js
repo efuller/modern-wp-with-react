@@ -6,16 +6,15 @@ import { Link } from 'react-router';
 class PostList extends Component {
     componentWillMount() {
         this.props.fetchPosts();
+        console.log(this.props);
     }
 
     renderPost() {
-        if(! this.props.posts.posts) {
-            return 'Loading...';
+        if(! this.props.posts) {
+            return <div>Loading...</div>;
         }
 
-        console.log(this.props.posts.posts);
-
-        return this.props.posts.posts.map((post) => {
+        return this.props.posts.map((post) => {
             return (
                 <div key={post.id}>
                     <Link to={post.slug}>
@@ -37,7 +36,7 @@ class PostList extends Component {
 }
 
 function mapStateToProps(state) {
-    return { posts: state.posts };
+    return { posts: state.posts.posts };
 }
 
 export default connect(mapStateToProps, actions)(PostList);
