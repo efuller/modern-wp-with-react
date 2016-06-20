@@ -4,7 +4,7 @@ import { SinglePost } from '../../components';
 class SinglePostContainer extends Component {
     
     render() {
-       return <SinglePost />
+       return <SinglePost slug={this.props.params.slug}/>
     }
 }
 
