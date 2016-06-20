@@ -91,7 +91,7 @@
 	var store = createStoreWithMiddleware(_reducers2.default); // create the store
 
 	// Styles
-	var styles = __webpack_require__(280);
+	var styles = __webpack_require__(282);
 
 	// Containers
 
@@ -27559,14 +27559,16 @@
 	    switch (action.type) {
 	        case _types.FETCH_POSTS:
 	            return _extends({}, state, { posts: action.payload });
+	        case _types.FETCH_POST:
+	            return _extends({}, state, { post: action.payload });
+	        default:
+	            return state;
 	    }
-
-	    return state;
 	};
 
 	var _types = __webpack_require__(254);
 
-	var INITIAL_STATE = [];
+	var INITIAL_STATE = { posts: [], post: null };
 
 /***/ },
 /* 254 */
@@ -27578,6 +27580,7 @@
 	  value: true
 	});
 	var FETCH_POSTS = exports.FETCH_POSTS = 'FETCH_POSTS';
+	var FETCH_POST = exports.FETCH_POST = 'FETCH_POST';
 
 /***/ },
 /* 255 */
@@ -27603,7 +27606,7 @@
 	    _reactRouter.Route,
 	    { path: '/', component: _containers.MainContainer },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.HomeContainer }),
-	    _react2.default.createElement(_reactRouter.Route, { path: ':slug', component: _containers.SinglePostContainer })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/:slug', component: _containers.SinglePostContainer })
 	);
 
 /***/ },
@@ -27625,7 +27628,7 @@
 
 	var _HomeContainer3 = _interopRequireDefault(_HomeContainer2);
 
-	var _SinglePostContainer2 = __webpack_require__(283);
+	var _SinglePostContainer2 = __webpack_require__(281);
 
 	var _SinglePostContainer3 = _interopRequireDefault(_SinglePostContainer2);
 
@@ -27746,7 +27749,7 @@
 
 	var _post_list2 = _interopRequireDefault(_post_list);
 
-	var _single_post = __webpack_require__(282);
+	var _single_post = __webpack_require__(280);
 
 	var _single_post2 = _interopRequireDefault(_single_post);
 
@@ -27802,17 +27805,20 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.fetchPosts();
+	            console.log(this.props);
 	        }
 	    }, {
 	        key: 'renderPost',
 	        value: function renderPost() {
-	            if (!this.props.posts.posts) {
-	                return 'Loading...';
+	            if (!this.props.posts) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'Loading...'
+	                );
 	            }
 
-	            console.log(this.props.posts.posts);
-
-	            return this.props.posts.posts.map(function (post) {
+	            return this.props.posts.map(function (post) {
 	                return _react2.default.createElement(
 	                    'div',
 	                    { key: post.id },
@@ -27824,7 +27830,8 @@
 	                            null,
 	                            post.title.rendered
 	                        )
-	                    )
+	                    ),
+	                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: post.excerpt.rendered } })
 	                );
 	            });
 	        }
@@ -27843,7 +27850,7 @@
 	}(_react.Component);
 
 	function mapStateToProps(state) {
-	    return { posts: state.posts };
+	    return { posts: state.posts.posts };
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(PostList);
@@ -27858,6 +27865,7 @@
 	    value: true
 	});
 	exports.fetchPosts = fetchPosts;
+	exports.fetchPost = fetchPost;
 
 	var _axios = __webpack_require__(262);
 
@@ -27877,6 +27885,19 @@
 	            dispatch({
 	                type: _types.FETCH_POSTS,
 	                payload: response.data
+	            });
+	        });
+	    };
+	}
+
+	function fetchPost(slug) {
+	    return function (dispatch) {
+	        _axios2.default.get(ROOT_URL + '/posts/?filter[name]=' + slug, {
+	            headers: { 'X-WP-Nonce': WP_API.nonce }
+	        }).then(function (response) {
+	            dispatch({
+	                type: _types.FETCH_POST,
+	                payload: response.data[0]
 	            });
 	        });
 	    };
@@ -29017,13 +29038,6 @@
 
 /***/ },
 /* 280 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 281 */,
-/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29043,6 +29057,8 @@
 	var _actions = __webpack_require__(261);
 
 	var actions = _interopRequireWildcard(_actions);
+
+	var _reactRouter = __webpack_require__(167);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29064,12 +29080,25 @@
 	    }
 
 	    _createClass(SinglePost, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.fetchPost(this.props.slug);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            if (!this.props.post) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'Loading...'
+	                );
+	            }
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Here is my post!'
+	                _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.post.content.rendered } })
 	            );
 	        }
 	    }]);
@@ -29080,10 +29109,16 @@
 	SinglePost.contextTypes = {
 	    router: _react.PropTypes.object
 	};
-	exports.default = SinglePost;
+
+
+	function mapStateToProps(state) {
+	    return { post: state.posts.post };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(SinglePost);
 
 /***/ },
-/* 283 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29120,7 +29155,7 @@
 	    _createClass(SinglePostContainer, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_components.SinglePost, null);
+	            return _react2.default.createElement(_components.SinglePost, { slug: this.props.params.slug });
 	        }
 	    }]);
 
@@ -29128,6 +29163,12 @@
 	}(_react.Component);
 
 	exports.default = SinglePostContainer;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);
