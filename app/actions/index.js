@@ -21,15 +21,14 @@ export function fetchPosts() {
 
 export function fetchPost(slug) {
     return function(dispatch) {
-        axios.get(`${ROOT_URL}/posts`, {
+        axios.get(`${ROOT_URL}/posts/?filter[name]=${slug}`, {
             headers: { 'X-WP-Nonce': WP_API.nonce },
-            filter: { 'name': slug }
         })
             .then(response => {
                 dispatch({
                     type: FETCH_POST,
-                    payload: response.data
-                })
-            })
+                    payload: response.data[0]
+                });
+            });
     }
 }
