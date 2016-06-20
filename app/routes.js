@@ -9,6 +9,6 @@ import {
 export default (
     <Route path="/" component={MainContainer}>
         <IndexRoute component={HomeContainer} />
-        <Route path=":slug" component={SinglePostContainer} />
+        <Route path="/:slug" component={SinglePostContainer} />
     </Route>
 );
