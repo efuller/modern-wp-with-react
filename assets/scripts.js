@@ -84,17 +84,29 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Apply redux middleware
-	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+	// const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+	// const store = createStoreWithMiddleware(reducers); // create the store
+	var initialState = {};
 
 	// Redux
 
-	var store = createStoreWithMiddleware(_reducers2.default); // create the store
+
+	var store = (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default), window.devToolsExtension ? window.devToolsExtension() : function (f) {
+	    return f;
+	}));
 
 	// Styles
 	var styles = __webpack_require__(282);
 
 	// Containers
 
+
+	if (false) {
+	    module.hot.accept('./reducers/', function () {
+	        var nextRootReducer = require('./reducers/index').default;
+	        store.replaceReducer(nextRootReducer);
+	    });
+	}
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
@@ -27558,9 +27570,9 @@
 
 	    switch (action.type) {
 	        case _types.FETCH_POSTS:
-	            return _extends({}, state, { posts: action.payload });
+	            return _extends({}, state, { posts: action.payload.data });
 	        case _types.FETCH_POST:
-	            return _extends({}, state, { post: action.payload });
+	            return _extends({}, state, { post: action.payload.data[0] });
 	        default:
 	            return state;
 	    }
@@ -27805,7 +27817,6 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.fetchPosts();
-	            console.log(this.props);
 	        }
 	    }, {
 	        key: 'renderPost',
@@ -27876,6 +27887,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
+	//const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
 
 	function fetchPosts() {
 	    return function (dispatch) {
@@ -27884,7 +27896,7 @@
 	        }).then(function (response) {
 	            dispatch({
 	                type: _types.FETCH_POSTS,
-	                payload: response.data
+	                payload: response
 	            });
 	        });
 	    };
@@ -27897,7 +27909,7 @@
 	        }).then(function (response) {
 	            dispatch({
 	                type: _types.FETCH_POST,
-	                payload: response.data[0]
+	                payload: response
 	            });
 	        });
 	    };

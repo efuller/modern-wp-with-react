@@ -4,9 +4,9 @@ import * as actions from '../actions';
 import { Link } from 'react-router';
 
 class PostList extends Component {
+
     componentWillMount() {
         this.props.fetchPosts();
-        console.log(this.props);
     }
 
     renderPost() {
