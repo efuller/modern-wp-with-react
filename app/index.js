@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import {syncHistoryWithStore } from 'react-router-redux';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -25,6 +26,8 @@ const store = createStore(
     )
 );
 
+const history = syncHistoryWithStore(browserHistory, store);
+
 // Styles
 var styles = require('./scss/style.scss');
 
@@ -42,5 +45,5 @@ if(module.hot) {
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={browserHistory} routes={routes} />
+        <Router history={history} routes={routes} />
     </Provider>, document.getElementById("app"));
