@@ -6,9 +6,9 @@ import {
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
         case FETCH_POSTS:
-            return { ...state, posts: action.payload };
+            return { ...state, posts: action.payload.data };
         case FETCH_POST:
-            return { ...state, post: action.payload };
+            return { ...state, post: action.payload.data[0] };
         default:
             return state;
     }

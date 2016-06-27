@@ -4,6 +4,7 @@ import {
     FETCH_POST } from './types';
 
 const ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
+//const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
 
 export function fetchPosts() {
     return function(dispatch) {
@@ -13,7 +14,7 @@ export function fetchPosts() {
             .then(response => {
                 dispatch({
                     type: FETCH_POSTS,
-                    payload: response.data
+                    payload: response
                 });
             });
     }
@@ -27,7 +28,7 @@ export function fetchPost(slug) {
             .then(response => {
                 dispatch({
                     type: FETCH_POST,
-                    payload: response.data[0]
+                    payload: response
                 });
             });
     }
