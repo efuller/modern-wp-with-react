@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
     FETCH_POSTS,
-    FETCH_POST } from './types';
+    FETCH_POST,
+    RESET_POST } from './types';
 
 const ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
 //const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
@@ -31,5 +32,11 @@ export function fetchPost(slug) {
                     payload: response
                 });
             });
+    }
+}
+
+export function resetActivePost() {
+    return {
+        type: RESET_POST
     }
 }
