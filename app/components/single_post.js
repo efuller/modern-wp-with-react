@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 
 class SinglePost extends Component {
@@ -8,8 +9,12 @@ class SinglePost extends Component {
         router: PropTypes.object
     };
 
+    componentWillUnmount() {
+        this.props.actions.resetActivePost();
+    }
+
     componentWillMount() {
-        this.props.fetchPost(this.props.slug);
+        this.props.actions.fetchPost(this.props.params.slug);
     }
     
     render() {
@@ -29,4 +34,8 @@ function mapStateToProps(state) {
     return { post: state.posts.post }
 }
 
-export default connect(mapStateToProps, actions)(SinglePost);
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
