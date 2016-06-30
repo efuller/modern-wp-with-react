@@ -2,13 +2,13 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import {
-    MainContainer,
-    HomeContainer,
-    SinglePostContainer } from './containers';
+    App,
+    PostList,
+    SinglePost } from './components';
 
 export default (
-    <Route path="/" component={MainContainer}>
-        <IndexRoute component={HomeContainer} />
-        <Route path="/:slug" component={SinglePostContainer} />
+    <Route path="/" component={App}>
+        <IndexRoute component={PostList} />
+        <Route path="/:slug" component={SinglePost} />
     </Route>
 );

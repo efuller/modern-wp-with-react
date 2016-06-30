@@ -31,11 +31,6 @@ const history = syncHistoryWithStore(browserHistory, store);
 // Styles
 var styles = require('./scss/style.scss');
 
-// Containers
-import {
-    MainContainer,
-    HomeContainer } from './containers';
-
 if(module.hot) {
     module.hot.accept('./reducers/',() => {
         const nextRootReducer = require('./reducers/index').default;
