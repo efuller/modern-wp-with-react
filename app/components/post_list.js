@@ -16,12 +16,12 @@ class PostList extends Component {
 
         return this.props.posts.map((post) => {
             return (
-                <div key={post.id}>
+                <article key={post.id} className="card">
                     <Link to={post.slug}>
                         <h3>{post.title.rendered}</h3>
                     </Link>
                     <div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}} />
-                </div>
+                </article>
             )
         })
     }

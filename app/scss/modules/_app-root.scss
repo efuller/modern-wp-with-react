@@ -6,4 +6,5 @@
 	@include outer-container;
 
 	border: 1px solid $color-divider;
+	padding: 0 $gutter;
 }

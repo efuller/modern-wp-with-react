@@ -4,9 +4,9 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <main role="main">
                 {this.props.children}
-            </div>
+            </main>
         )
     }
 }
