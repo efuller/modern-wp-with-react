@@ -27975,35 +27975,23 @@
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case _types.FETCH_POSTS:
+	        case _actionTypes.FETCH_POSTS:
 	            return _extends({}, state, { posts: action.payload.data });
-	        case _types.FETCH_POST:
+	        case _actionTypes.FETCH_POST:
 	            return _extends({}, state, { post: action.payload.data[0] });
-	        case _types.RESET_POST:
+	        case _actionTypes.RESET_POST:
 	            return _extends({}, state, { post: null });
 	        default:
 	            return state;
 	    }
 	};
 
-	var _types = __webpack_require__(260);
+	var _actionTypes = __webpack_require__(455);
 
 	var INITIAL_STATE = { posts: [], post: null };
 
 /***/ },
-/* 260 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var FETCH_POSTS = exports.FETCH_POSTS = 'FETCH_POSTS';
-	var FETCH_POST = exports.FETCH_POST = 'FETCH_POST';
-	var RESET_POST = exports.RESET_POST = 'RESET_POST';
-
-/***/ },
+/* 260 */,
 /* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -35221,9 +35209,9 @@
 
 	var _reactRedux = __webpack_require__(226);
 
-	var _actions = __webpack_require__(425);
+	var _postActions = __webpack_require__(456);
 
-	var actions = _interopRequireWildcard(_actions);
+	var actions = _interopRequireWildcard(_postActions);
 
 	var _reactRouter = __webpack_require__(167);
 
@@ -35315,62 +35303,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(PostList);
 
 /***/ },
-/* 425 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.fetchPosts = fetchPosts;
-	exports.fetchPost = fetchPost;
-	exports.resetActivePost = resetActivePost;
-
-	var _axios = __webpack_require__(426);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _types = __webpack_require__(260);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
-	//const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
-
-	function fetchPosts() {
-	    return function (dispatch) {
-	        _axios2.default.get(ROOT_URL + '/posts', {
-	            headers: { 'X-WP-Nonce': WP_API.nonce }
-	        }).then(function (response) {
-	            dispatch({
-	                type: _types.FETCH_POSTS,
-	                payload: response
-	            });
-	        });
-	    };
-	}
-
-	function fetchPost(slug) {
-	    return function (dispatch) {
-	        _axios2.default.get(ROOT_URL + '/posts/?filter[name]=' + slug, {
-	            headers: { 'X-WP-Nonce': WP_API.nonce }
-	        }).then(function (response) {
-	            dispatch({
-	                type: _types.FETCH_POST,
-	                payload: response
-	            });
-	        });
-	    };
-	}
-
-	function resetActivePost() {
-	    return {
-	        type: _types.RESET_POST
-	    };
-	}
-
-/***/ },
+/* 425 */,
 /* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -37155,13 +37088,11 @@
 
 	var _reactRedux = __webpack_require__(226);
 
-	var _actions = __webpack_require__(425);
+	var _postActions = __webpack_require__(456);
 
-	var actions = _interopRequireWildcard(_actions);
+	var actions = _interopRequireWildcard(_postActions);
 
 	var _redux = __webpack_require__(233);
-
-	var _reactRouter = __webpack_require__(167);
 
 	var _circularProgress = __webpack_require__(444);
 
@@ -37249,6 +37180,79 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 455 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// Post action types
+	var FETCH_POSTS = exports.FETCH_POSTS = 'FETCH_POSTS';
+	var FETCH_POST = exports.FETCH_POST = 'FETCH_POST';
+	var RESET_POST = exports.RESET_POST = 'RESET_POST';
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.fetchPosts = fetchPosts;
+	exports.fetchPost = fetchPost;
+	exports.resetActivePost = resetActivePost;
+
+	var _axios = __webpack_require__(426);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _actionTypes = __webpack_require__(455);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
+	//const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
+
+	function fetchPosts() {
+
+	    return function (dispatch) {
+	        _axios2.default.get(ROOT_URL + '/posts', {
+	            headers: { 'X-WP-Nonce': WP_API.nonce }
+	        }).then(function (response) {
+	            dispatch({
+	                type: _actionTypes.FETCH_POSTS,
+	                payload: response
+	            });
+	        });
+	    };
+	}
+
+	function fetchPost(slug) {
+
+	    return function (dispatch) {
+	        _axios2.default.get(ROOT_URL + '/posts/?filter[name]=' + slug, {
+	            headers: { 'X-WP-Nonce': WP_API.nonce }
+	        }).then(function (response) {
+	            dispatch({
+	                type: _actionTypes.FETCH_POST,
+	                payload: response
+	            });
+	        });
+	    };
+	}
+
+	function resetActivePost() {
+
+	    return {
+	        type: _actionTypes.RESET_POST
+	    };
+	}
 
 /***/ }
 /******/ ]);

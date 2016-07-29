@@ -12,4 +12,5 @@ var styles = require('./scss/style.scss');
 ReactDOM.render(
     <Provider store={store}>
         {routes}
-    </Provider>, document.getElementById("app"));
+    </Provider>, document.getElementById("app")
+);

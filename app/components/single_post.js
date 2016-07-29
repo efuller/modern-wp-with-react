@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../actions/postActions';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
 import LoadingCircular from './circular-progress';
 import Paper  from 'material-ui/Paper';
 
