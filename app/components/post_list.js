@@ -20,13 +20,13 @@ class PostList extends Component {
 
     renderPost() {
         if(! this.props.posts) {
-            return <div>Loading...</div>;
+            return <LoadingCircular/>
         }
 
         return this.props.posts.map((post) => {
             return (
-                <Paper style={styles.root}>
-                    <article key={post.id} className="card">
+                <Paper key={post.id} style={styles.root}>
+                    <article className="card">
                         <Link to={post.slug}>
                             <h3>{post.title.rendered}</h3>
                         </Link>
