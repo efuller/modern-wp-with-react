@@ -379,12 +379,12 @@ body {
   font-family: "Roboto", sans-serif;
   line-height: 1.625; }
 
-#app {
+.container {
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 24px; }
-  #app::after {
+  margin-top: 48px; }
+  .container::after {
     clear: both;
     content: "";
     display: table; }
