@@ -1,3 +1,3 @@
-export App from './app';
-export PostList from './post_list';
-export SinglePost from './single_post';
+export App from './App';
+export PostList from './PostList';
+export SinglePost from './SinglePost';

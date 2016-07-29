@@ -9,8 +9,15 @@ import routes from './routes/routes';
 // Styles
 var styles = require('./scss/style.scss');
 
-ReactDOM.render(
+const Root = () => (
     <Provider store={store}>
+        <div>
         {routes}
-    </Provider>, document.getElementById("app")
+        </div>
+    </Provider>
+);
+
+ReactDOM.render(
+    <Root/>,
+    document.getElementById("app")
 );

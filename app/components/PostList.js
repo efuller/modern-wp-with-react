@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/postActions';
 import { Link } from 'react-router';
-import LoadingCircular from './circular-progress';
+import LoadingCircular from './elements/CircularProgress';
 import Paper from 'material-ui/Paper';
 
 const styles = {
