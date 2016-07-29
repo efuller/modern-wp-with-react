@@ -9,7 +9,7 @@ const styles = {
 };
 
 const LoadingCircular = () => (
-    <CircularProgress style={styles.circle} size={3} color="#6A1B9A" />
+    <CircularProgress style={styles.circle} size={1} color="#FF5722" />
 );
 
 export default LoadingCircular;
