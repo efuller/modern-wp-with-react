@@ -4,6 +4,14 @@ import * as actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import LoadingCircular from './circular-progress';
+import Paper  from 'material-ui/Paper';
+
+const styles = {
+    root: {
+        marginBottom: '20px',
+        padding: '20px'
+    }
+};
 
 class SinglePost extends Component {
     static contextTypes = {
@@ -24,9 +32,11 @@ class SinglePost extends Component {
         }
 
         return (
-            <div>
-                <div dangerouslySetInnerHTML={{__html: this.props.post.content.rendered}} />
-            </div>
+            <Paper style={styles.root}>
+                <div>
+                    <div dangerouslySetInnerHTML={{__html: this.props.post.content.rendered}} />
+                </div>
+            </Paper>
         )
     }
 }
