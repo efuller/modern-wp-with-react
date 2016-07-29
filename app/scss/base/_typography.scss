@@ -7,3 +7,11 @@ body {
 	font-family: $font-sans;
 	line-height: $line-height-base;
 }
+
+h2,
+h2.post-title {
+	color: $color-accent-color;
+	font-size: 36px;
+	font-weight: 300;
+	margin-bottom: 0;
+}

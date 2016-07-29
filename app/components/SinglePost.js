@@ -33,6 +33,7 @@ class SinglePost extends Component {
         return (
             <Paper style={styles.root}>
                 <div>
+                    <h2 className="post-title">{this.props.post.title.rendered}</h2>
                     <div dangerouslySetInnerHTML={{__html: this.props.post.content.rendered}} />
                 </div>
             </Paper>
