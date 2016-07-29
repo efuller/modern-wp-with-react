@@ -1,3 +1,18 @@
 //--------------------------------------------------------------
 // Navigation
 //--------------------------------------------------------------
+
+a {
+	color: $color-accent-color;
+	text-decoration: none;
+
+	&:visited {
+		color: $color-accent-color;
+	}
+
+	&:hover,
+	&:focus,
+	&:active {
+		color: darken($color-accent-color, 10%);
+	}
+}
