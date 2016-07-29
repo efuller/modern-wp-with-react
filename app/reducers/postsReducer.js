@@ -3,12 +3,12 @@ import {
     FETCH_POST,
     RESET_POST } from '../actions/actionTypes';
 
-const INITIAL_STATE = { posts: [], post: null };
+const INITIAL_STATE = { posts: [], post: null, isFetched: false };
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
         case FETCH_POSTS:
-            return { ...state, posts: action.payload.data };
+            return { ...state, posts: action.payload.data, isFetched: true };
         case FETCH_POST:
             return { ...state, post: action.payload.data[0] };
         case RESET_POST:

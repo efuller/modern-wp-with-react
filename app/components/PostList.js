@@ -19,7 +19,7 @@ class PostList extends Component {
     }
 
     renderPost() {
-        if(! this.props.posts) {
+        if(! this.props.isFetched) {
             return <LoadingCircular/>
         }
 
@@ -28,7 +28,7 @@ class PostList extends Component {
                 <Paper key={post.id} style={styles.root}>
                     <article className="card">
                         <Link to={post.slug}>
-                            <h3>{post.title.rendered}</h3>
+                            <h2 className="post-title">{post.title.rendered}</h2>
                         </Link>
                         <div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}} />
                     </article>
@@ -47,7 +47,7 @@ class PostList extends Component {
 }
 
 function mapStateToProps(state) {
-    return { posts: state.posts.posts };
+    return { posts: state.posts.posts, isFetched: state.posts.isFetched };
 }
 
 export default connect(mapStateToProps, actions)(PostList);
