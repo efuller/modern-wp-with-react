@@ -1,9 +1,7 @@
 //--------------------------------------------------------------
-// App Root Container
+// Typography
 //--------------------------------------------------------------
 
-#app {
-	@include outer-container;
-
-	border: 1px solid $color-divider;
+body {
+	font-family: $font-sans;
 }

@@ -1,9 +1,5 @@
 //--------------------------------------------------------------
-// App Root Container
+// Typography
 //--------------------------------------------------------------
 
-#app {
-	@include outer-container;
-
-	border: 1px solid $color-divider;
-}
+$font-sans: 'Roboto', sans-serif;
