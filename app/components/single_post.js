@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import LoadingCircular from './circular-progress';
 
 class SinglePost extends Component {
     static contextTypes = {
@@ -19,7 +20,7 @@ class SinglePost extends Component {
     
     render() {
         if(! this.props.post) {
-            return <div>Loading...</div>;
+            return <LoadingCircular/>;
         }
 
         return (
