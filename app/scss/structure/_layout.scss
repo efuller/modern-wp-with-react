@@ -2,3 +2,8 @@
 // Layout
 //--------------------------------------------------------------
 
+.container {
+	@include outer-container;
+
+	margin-top: $gutter * 2;
+}
