@@ -366,14 +366,12 @@ textarea {
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
 
-body {
-  background: dodgerblue; }
-
 #app {
-  max-width: 68em;
+  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
-  background: cornflowerblue; }
+  background: blue;
+  border: 1px solid rgba(51, 51, 51, 0.12); }
   #app::after {
     clear: both;
     content: "";
