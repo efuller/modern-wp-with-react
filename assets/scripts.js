@@ -27984,7 +27984,7 @@
 
 	    switch (action.type) {
 	        case _actionTypes.FETCH_POSTS:
-	            return _extends({}, state, { posts: action.payload.data });
+	            return _extends({}, state, { posts: action.payload.data, isFetched: true });
 	        case _actionTypes.FETCH_POST:
 	            return _extends({}, state, { post: action.payload.data[0] });
 	        case _actionTypes.RESET_POST:
@@ -27996,7 +27996,7 @@
 
 	var _actionTypes = __webpack_require__(455);
 
-	var INITIAL_STATE = { posts: [], post: null };
+	var INITIAL_STATE = { posts: [], post: null, isFetched: false };
 
 /***/ },
 /* 260 */,
@@ -37130,7 +37130,7 @@
 	    }, {
 	        key: 'renderPost',
 	        value: function renderPost() {
-	            if (!this.props.posts) {
+	            if (!this.props.isFetched) {
 	                return _react2.default.createElement(_CircularProgress2.default, null);
 	            }
 
@@ -37145,8 +37145,8 @@
 	                            _reactRouter.Link,
 	                            { to: post.slug },
 	                            _react2.default.createElement(
-	                                'h3',
-	                                null,
+	                                'h2',
+	                                { className: 'post-title' },
 	                                post.title.rendered
 	                            )
 	                        ),
@@ -37170,7 +37170,7 @@
 	}(_react.Component);
 
 	function mapStateToProps(state) {
-	    return { posts: state.posts.posts };
+	    return { posts: state.posts.posts, isFetched: state.posts.isFetched };
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(PostList);
@@ -37256,6 +37256,11 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    null,
+	                    _react2.default.createElement(
+	                        'h2',
+	                        { className: 'post-title' },
+	                        this.props.post.title.rendered
+	                    ),
 	                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.post.content.rendered } })
 	                )
 	            );
@@ -37296,6 +37301,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(167);
+
 	var _AppBar = __webpack_require__(463);
 
 	var _AppBar2 = _interopRequireDefault(_AppBar);
@@ -37311,6 +37318,9 @@
 	var styles = {
 	    root: {
 	        backgroundColor: '#303F9F'
+	    },
+	    brand: {
+	        color: '#FFFFFF'
 	    }
 	};
 
@@ -37326,7 +37336,11 @@
 	    _createClass(NavBar, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_AppBar2.default, { style: styles.root });
+	            return _react2.default.createElement(_AppBar2.default, { title: _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { style: styles.brand, to: '/' },
+	                    'Modern WP with React'
+	                ), style: styles.root });
 	        }
 	    }]);
 

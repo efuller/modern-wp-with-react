@@ -379,6 +379,13 @@ body {
   font-family: "Roboto", sans-serif;
   line-height: 1.625; }
 
+h2,
+h2.post-title {
+  color: #FF5722;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 0; }
+
 .container {
   max-width: 960px;
   margin-left: auto;
