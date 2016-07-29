@@ -1,0 +1,10 @@
+//--------------------------------------------------------------
+// App Root Container
+//--------------------------------------------------------------
+
+#app {
+	@include outer-container;
+
+	background: pink;
+	border: 1px solid $color-divider;
+}
