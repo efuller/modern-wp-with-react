@@ -3,16 +3,14 @@ import { Router, Route, IndexRoute } from 'react-router';
 import { history } from '../store/configureStore';
 
 // Containers
-import { AppContainer } from '../containers';
+import { AppContainer, HomeContainer } from '../containers';
 
-import {
-    PostList,
-    SinglePost } from '../components';
+import { SinglePost } from '../components';
 
 export default (
     <Router history={history}>
         <Route path="/" component={AppContainer}>
-            <IndexRoute component={PostList} />
+            <IndexRoute component={HomeContainer} />
             <Route path="/:slug" component={SinglePost} />
         </Route>
     </Router>
