@@ -1,42 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/postActions';
-import { Link } from 'react-router';
+//import { Link } from 'react-router';
 import LoadingCircular from '../../components/elements/CircularProgress';
-import Paper from 'material-ui/Paper';
-
-const styles = {
-	root: {
-		marginBottom: '20px',
-		padding: '20px'
-	}
-};
+//import Paper from 'material-ui/Paper';
+import HomePage from '../../components/Home/HomePage';
 
 class HomeContainer extends Component {
 
 	renderPost() {
 		if(! this.props.isFetched) {
 			return <LoadingCircular/>
-		}
-
-		return this.props.posts.map((post) => {
+		} else {
 			return (
-				<Paper key={post.id} style={styles.root}>
-					<article className="card">
-						<Link to={post.slug}>
-							<h2 className="post-title">{post.title.rendered}</h2>
-						</Link>
-						<div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}} />
-					</article>
-				</Paper>
+				<HomePage posts={this.props.posts} />
 			)
-		})
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				{this.renderPost()}
+			{this.renderPost()}
 			</div>
 		)
 	}
