@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions/postActions';
+import * as actions from '../../actions/postActions';
 import { bindActionCreators } from 'redux';
-import LoadingCircular from './elements/CircularProgress';
+import LoadingCircular from '../elements/CircularProgress';
 import Paper  from 'material-ui/Paper';
 
 const styles = {
@@ -12,6 +12,7 @@ const styles = {
     }
 };
 
+// @todo Refactor single posts into stateless components - Data is already in state.
 class SinglePost extends Component {
     static contextTypes = {
         router: PropTypes.object
