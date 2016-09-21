@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Header from '../../components/Header/Header';
+import Navigation from '../../components/Navigation/Navigation';
 
 class App extends Component {
 
@@ -10,6 +12,7 @@ class App extends Component {
 			<MuiThemeProvider>
 				<div>
 					<Header/>
+					<Navigation categories={this.props.categories} />
 					<div className="container">
 						<main role="main">
 							{this.props.children}
@@ -21,4 +24,10 @@ class App extends Component {
 	}
 }
 
-export default App;
+function mapStateToProps(state) {
+	return {
+		categories: state.categories
+	}
+}
+
+export default connect(mapStateToProps)(App);
