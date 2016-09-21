@@ -10,7 +10,7 @@ const Navigation = ({categories}) => {
 	return ! categories.length
 	?   <div>Loading</div>
 	:   <div className="navbar-container">
-			<nav className="container nav-bar">
+			<nav className="container navbar">
 				<ul className="menu">
 					{categories.map((category) => (
 						<NavLinks key={category.id} category={category} />
