@@ -5,13 +5,14 @@ import { history } from '../store/configureStore';
 // Containers
 import { AppContainer, HomeContainer } from '../containers';
 
-import { SinglePost } from '../components';
+import { SinglePost, CategoryPage } from '../components';
 
 export default (
     <Router history={history}>
         <Route path="/" component={AppContainer}>
             <IndexRoute component={HomeContainer} />
-            <Route path="/:slug" component={SinglePost} />
+	        <Route path="/:category" component={CategoryPage} />
+            <Route path="story/:slug" component={SinglePost} />
         </Route>
     </Router>
 );
