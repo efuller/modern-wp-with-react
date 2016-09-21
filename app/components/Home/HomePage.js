@@ -14,7 +14,7 @@ function PostCard({post}) {
 	return (
 		<Paper style={styles.root}>
 			<article className="card">
-				<Link to={post.slug}>
+				<Link to={`/story/${post.slug}`}>
 					<h2 className="post-title">{post.title.rendered}</h2>
 				</Link>
 				<div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}}/>
