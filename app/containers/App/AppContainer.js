@@ -26,7 +26,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
 	return {
-		categories: state.categories
+		categories: state.categories.categories
 	}
 }
 
