@@ -3,7 +3,8 @@ import {
     FETCH_POSTS,
     FETCH_POST,
     RESET_POST,
-	FETCH_POSTS_BY_CATEGORY_ID } from './actionTypes';
+	FETCH_POSTS_BY_CATEGORY_ID,
+	RESET_CATEGORY_POSTS } from './actionTypes';
 
 const ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
 //const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
@@ -64,4 +65,11 @@ export function resetActivePost() {
     return {
         type: RESET_POST
     }
+}
+
+export function resetCategoryPosts() {
+
+	return {
+		type: RESET_CATEGORY_POSTS
+	}
 }

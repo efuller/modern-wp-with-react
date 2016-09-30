@@ -2,7 +2,8 @@ import {
     FETCH_POSTS,
     FETCH_POST,
     RESET_POST,
-	FETCH_POSTS_BY_CATEGORY_ID } from '../actions/actionTypes';
+	FETCH_POSTS_BY_CATEGORY_ID,
+	RESET_CATEGORY_POSTS } from '../actions/actionTypes';
 
 const INITIAL_STATE = { posts: [], post: null, isFetched: false, categoryPosts: [], categoryPostsFetched: false };
 
@@ -15,7 +16,9 @@ export default function(state = INITIAL_STATE, action) {
 	    case FETCH_POSTS_BY_CATEGORY_ID:
 	    	return { ...state, categoryPosts: action.payload, categoryPostsFetched: true };
         case RESET_POST:
-            return { ...state, post: null };
+            return { ...state, post: null, };
+	    case RESET_CATEGORY_POSTS:
+	    	return { ...state, categoryPosts: [], categoryPostsFetched: false };
         default:
             return state;
     }
