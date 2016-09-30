@@ -1,8 +1,9 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 function NavLinks({category}) {
 	return (
-		<li>{category.name}</li>
+		<li><Link to={category.link}>{category.name}</Link></li>
 	)
 }
 

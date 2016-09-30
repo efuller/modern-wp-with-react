@@ -11,7 +11,7 @@ export default (
     <Router history={history}>
         <Route path="/" component={AppContainer}>
             <IndexRoute component={HomeContainer} />
-	        <Route path="/:category" component={CategoryPage} />
+	        <Route path="category/:category" component={CategoryPage} />
             <Route path="story/:slug" component={SinglePost} />
         </Route>
     </Router>
