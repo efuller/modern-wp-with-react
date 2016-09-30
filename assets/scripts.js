@@ -27999,8 +27999,12 @@
 	            return _extends({}, state, { posts: action.payload.data, isFetched: true });
 	        case _actionTypes.FETCH_POST:
 	            return _extends({}, state, { post: action.payload.data[0] });
+	        case _actionTypes.FETCH_POSTS_BY_CATEGORY_ID:
+	            return _extends({}, state, { categoryPosts: action.payload, categoryPostsFetched: true });
 	        case _actionTypes.RESET_POST:
 	            return _extends({}, state, { post: null });
+	        case _actionTypes.RESET_CATEGORY_POSTS:
+	            return _extends({}, state, { categoryPosts: [], categoryPostsFetched: false });
 	        default:
 	            return state;
 	    }
@@ -28008,7 +28012,7 @@
 
 	var _actionTypes = __webpack_require__(260);
 
-	var INITIAL_STATE = { posts: [], post: null, isFetched: false };
+	var INITIAL_STATE = { posts: [], post: null, isFetched: false, categoryPosts: [], categoryPostsFetched: false };
 
 /***/ },
 /* 260 */
@@ -28024,6 +28028,8 @@
 	var FETCH_POST = exports.FETCH_POST = 'FETCH_POST';
 	var RESET_POST = exports.RESET_POST = 'RESET_POST';
 	var FETCH_CATEGORIES = exports.FETCH_CATEGORIES = 'FETCH_CATEGORIES';
+	var FETCH_POSTS_BY_CATEGORY_ID = exports.FETCH_POSTS_BY_CATEGORY_ID = 'FETCH_POSTS_BY_CATEGORY_ID';
+	var RESET_CATEGORY_POSTS = exports.RESET_CATEGORY_POSTS = 'RESET_CATEGORY_POSTS';
 
 /***/ },
 /* 261 */
@@ -28035,14 +28041,15 @@
 		value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	exports.default = function () {
 		var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_STATE : arguments[0];
 		var action = arguments[1];
 
 		switch (action.type) {
 			case _actionTypes.FETCH_CATEGORIES:
-				console.log(action);
-				return action.payload;
+				return _extends({}, state, { categories: action.payload, isFetched: true });
 			default:
 				return state;
 		}
@@ -28050,7 +28057,7 @@
 
 	var _actionTypes = __webpack_require__(260);
 
-	var INITIAL_STATE = { categories: [] };
+	var INITIAL_STATE = { categories: [], currentCategory: null, isFetched: false };
 
 /***/ },
 /* 262 */
@@ -29235,9 +29242,12 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.fetchPostsByCategoryIdSuccess = fetchPostsByCategoryIdSuccess;
 	exports.fetchPosts = fetchPosts;
 	exports.fetchPost = fetchPost;
+	exports.fetchPostsByCategoryId = fetchPostsByCategoryId;
 	exports.resetActivePost = resetActivePost;
+	exports.resetCategoryPosts = resetCategoryPosts;
 
 	var _axios = __webpack_require__(263);
 
@@ -29249,6 +29259,13 @@
 
 	var ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
 	//const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
+
+	function fetchPostsByCategoryIdSuccess(posts) {
+	    return {
+	        type: _actionTypes.FETCH_POSTS_BY_CATEGORY_ID,
+	        payload: posts
+	    };
+	}
 
 	function fetchPosts() {
 
@@ -29278,10 +29295,29 @@
 	    };
 	}
 
+	function fetchPostsByCategoryId(categorySlug) {
+	    return function (dispatch) {
+	        _axios2.default.get(ROOT_URL + '/posts?filter[category_name]=' + categorySlug, {
+	            headers: { 'X-WP-Nonce': WP_API.nonce }
+	        }).then(function (posts) {
+	            dispatch(fetchPostsByCategoryIdSuccess(posts));
+	        }).catch(function (error) {
+	            throw error;
+	        });
+	    };
+	}
+
 	function resetActivePost() {
 
 	    return {
 	        type: _actionTypes.RESET_POST
+	    };
+	}
+
+	function resetCategoryPosts() {
+
+	    return {
+	        type: _actionTypes.RESET_CATEGORY_POSTS
 	    };
 	}
 
@@ -29317,7 +29353,7 @@
 	        _reactRouter.Route,
 	        { path: '/', component: _containers.AppContainer },
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.HomeContainer }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/:category', component: _components.CategoryPage }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'category/:category', component: _containers.CategoryContainer }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'story/:slug', component: _components.SinglePost })
 	    )
 	);
@@ -29331,7 +29367,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.HomeContainer = exports.AppContainer = undefined;
+	exports.CategoryContainer = exports.HomeContainer = exports.AppContainer = undefined;
 
 	var _AppContainer2 = __webpack_require__(284);
 
@@ -29341,10 +29377,15 @@
 
 	var _HomeContainer3 = _interopRequireDefault(_HomeContainer2);
 
+	var _CategoryContainer2 = __webpack_require__(499);
+
+	var _CategoryContainer3 = _interopRequireDefault(_CategoryContainer2);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.AppContainer = _AppContainer3.default;
 	exports.HomeContainer = _HomeContainer3.default;
+	exports.CategoryContainer = _CategoryContainer3.default;
 
 /***/ },
 /* 284 */
@@ -29423,7 +29464,7 @@
 
 	function mapStateToProps(state) {
 		return {
-			categories: state.categories
+			categories: state.categories.categories
 		};
 	}
 
@@ -40834,7 +40875,7 @@
 /* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -40844,15 +40885,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(167);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function NavLinks(_ref) {
 		var category = _ref.category;
 
 		return _react2.default.createElement(
-			"li",
+			'li',
 			null,
-			category.name
+			_react2.default.createElement(
+				_reactRouter.Link,
+				{ to: '/category/' + category.slug },
+				category.name
+			)
 		);
 	}
 
@@ -40860,18 +40907,18 @@
 		var categories = _ref2.categories;
 
 		return !categories.length ? _react2.default.createElement(
-			"div",
+			'div',
 			null,
-			"Loading"
+			'Loading'
 		) : _react2.default.createElement(
-			"div",
-			{ className: "navbar-container" },
+			'div',
+			{ className: 'navbar-container' },
 			_react2.default.createElement(
-				"nav",
-				{ className: "container navbar" },
+				'nav',
+				{ className: 'container navbar' },
 				_react2.default.createElement(
-					"ul",
-					{ className: "menu" },
+					'ul',
+					{ className: 'menu' },
 					categories.map(function (category) {
 						return _react2.default.createElement(NavLinks, { key: category.id, category: category });
 					})
@@ -40921,10 +40968,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import { Link } from 'react-router';
-
-	//import Paper from 'material-ui/Paper';
-
 
 	var HomeContainer = function (_Component) {
 		_inherits(HomeContainer, _Component);
@@ -41328,7 +41371,6 @@
 		}
 	};
 
-	// @todo Refactor this out into a stateless component
 	function PostCard(_ref) {
 		var post = _ref.post;
 
@@ -41590,15 +41632,53 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Paper = __webpack_require__(486);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	var _reactRouter = __webpack_require__(167);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var CategoryPage = function CategoryPage(_ref) {
-		var categoryPosts = _ref.categoryPosts;
+	var styles = {
+		root: {
+			marginBottom: '20px',
+			padding: '20px'
+		}
+	};
+
+	function PostCard(_ref) {
+		var categoryPost = _ref.categoryPost;
+
+		return _react2.default.createElement(
+			_Paper2.default,
+			{ style: styles.root },
+			_react2.default.createElement(
+				'article',
+				{ className: 'card' },
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/story/' + categoryPost.slug },
+					_react2.default.createElement(
+						'h2',
+						{ className: 'post-title' },
+						categoryPost.title.rendered
+					)
+				),
+				_react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: categoryPost.excerpt.rendered } })
+			)
+		);
+	}
+
+	var CategoryPage = function CategoryPage(_ref2) {
+		var categoryPosts = _ref2.categoryPosts;
 
 		return _react2.default.createElement(
 			'div',
 			null,
-			'Category Posts'
+			categoryPosts.map(function (categoryPost) {
+				return _react2.default.createElement(PostCard, { key: categoryPost.id, categoryPost: categoryPost });
+			})
 		);
 	};
 
@@ -41609,6 +41689,120 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(226);
+
+	var _redux = __webpack_require__(233);
+
+	var _postActions = __webpack_require__(281);
+
+	var actions = _interopRequireWildcard(_postActions);
+
+	var _CircularProgress = __webpack_require__(490);
+
+	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
+
+	var _CategoryPage = __webpack_require__(497);
+
+	var _CategoryPage2 = _interopRequireDefault(_CategoryPage);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CategoryContainer = function (_Component) {
+		_inherits(CategoryContainer, _Component);
+
+		function CategoryContainer() {
+			_classCallCheck(this, CategoryContainer);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(CategoryContainer).apply(this, arguments));
+		}
+
+		_createClass(CategoryContainer, [{
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				this.props.actions.resetCategoryPosts();
+			}
+		}, {
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.props.actions.fetchPostsByCategoryId(this.props.params.category);
+			}
+		}, {
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps(nextProps) {
+				if (this.props.currentCategory != nextProps.params.category) {
+					this.props.actions.fetchPostsByCategoryId(nextProps.params.category);
+				}
+			}
+		}, {
+			key: 'renderPost',
+			value: function renderPost() {
+				if (!this.props.isFetched) {
+					return _react2.default.createElement(_CircularProgress2.default, null);
+				} else {
+					return _react2.default.createElement(_CategoryPage2.default, { categoryPosts: this.props.postsInCategory });
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.renderPost()
+				);
+			}
+		}]);
+
+		return CategoryContainer;
+	}(_react.Component);
+
+	CategoryContainer.contextTypes = {
+		router: _react.PropTypes.object
+	};
+
+
+	function mapStateToProps(state, ownProps) {
+		console.log('State:', state);
+		var currentCategory = ownProps.params.category;
+		return {
+			postsInCategory: state.posts.categoryPosts.data,
+			isFetched: state.posts.categoryPostsFetched,
+			currentCategory: currentCategory
+		};
+	}
+
+	function mapDispatchToProps(dispatch) {
+		return {
+			actions: (0, _redux.bindActionCreators)(actions, dispatch)
+		};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CategoryContainer);
 
 /***/ }
 /******/ ]);
