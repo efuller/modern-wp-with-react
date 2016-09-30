@@ -1,12 +1,11 @@
-import { FETCH_CATEGORIES } from '../actions/actionTypes';
+import { FETCH_CATEGORIES, FETCH_CATEGORIES_BY_ID } from '../actions/actionTypes';
 
-const INITIAL_STATE = { categories: [] };
+const INITIAL_STATE = { categories: [], currentCategory: null, isFetched: false };
 
-export default function(state = INITIAL_STATE, action) {
+export default function(state = INITIAL_STATE,  action) {
 	switch(action.type) {
 		case FETCH_CATEGORIES:
-			console.log(action);
-			return action.payload;
+			return { ...state, categories: action.payload, isFetched: true };
 		default:
 			return state;
 	}
