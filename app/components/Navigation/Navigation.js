@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 function NavLinks({category}) {
 	return (
-		<li><Link to={category.link}>{category.name}</Link></li>
+		<li><Link to={`/category/${category.slug}`}>{category.name}</Link></li>
 	)
 }
 
