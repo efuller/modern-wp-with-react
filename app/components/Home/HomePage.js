@@ -9,7 +9,6 @@ const styles = {
 	}
 };
 
-// @todo Refactor this out into a stateless component
 function PostCard({post}) {
 	return (
 		<Paper style={styles.root}>
