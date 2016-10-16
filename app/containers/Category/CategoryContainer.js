@@ -25,7 +25,7 @@ class CategoryContainer extends Component {
 	}
 
 	renderPost() {
-		if(! this.props.isFetched) {
+		if(! this.props.categoryPostsFetched) {
 			return <LoadingCircular/>
 		} else {
 			return (
@@ -44,11 +44,11 @@ class CategoryContainer extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	console.log('State:',state);
+
 	const currentCategory = ownProps.params.category;
 	return {
 		postsInCategory: state.posts.categoryPosts.data,
-		isFetched: state.posts.categoryPostsFetched,
+		categoryPostsFetched: state.posts.categoryPostsFetched,
 		currentCategory: currentCategory
 	};
 }
