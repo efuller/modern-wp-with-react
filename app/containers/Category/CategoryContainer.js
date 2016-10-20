@@ -6,28 +6,19 @@ import LoadingCircular from '../../components/elements/CircularProgress';
 import CategoryPage from '../../components/CategoryPage/CategoryPage';
 
 class CategoryContainer extends Component {
+	constructor(props, context) {
+		super(props, context);
+	}
+
 	static contextTypes = {
 		router: PropTypes.object
 	};
 
-	componentWillUnmount() {
-		this.props.actions.resetCategoryPosts();
-	}
-
-	componentWillMount() {
-		this.props.actions.fetchPostsByCategoryId(this.props.params.category);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (this.props.currentCategory != nextProps.params.category) {
-			this.props.actions.fetchPostsByCategoryId(nextProps.params.category);
-		}
-	}
-
 	renderPost() {
-		if(! this.props.categoryPostsFetched) {
+		if(! this.props.postsInCategory.length) {
 			return <LoadingCircular/>
 		} else {
+		console.log(this.props.postsInCategory);
 			return (
 				<CategoryPage categoryPosts={this.props.postsInCategory} />
 			)
@@ -43,13 +34,29 @@ class CategoryContainer extends Component {
 	}
 }
 
-function mapStateToProps(state, ownProps) {
+function getCurrentCategory(categories, categorySlug) {
+	const category = categories.filter(category => category.slug == categorySlug);
+	if (category.length) return category[0];
+	return null;
+}
 
-	const currentCategory = ownProps.params.category;
+function getCategoryPosts(posts, currentCategory) {
+	const categoryPosts = posts.filter(post => post.categories[0] == currentCategory.id);
+	if (categoryPosts.length) return categoryPosts;
+	return null;
+}
+
+function mapStateToProps(state, ownProps) {
+	const categorySlug = ownProps.params.category;
+	const currentCategory = getCurrentCategory(state.categories.categories, categorySlug);
+	let categoryPostList = [];
+
+	if (state.posts.isFetched) {
+		categoryPostList = getCategoryPosts(state.posts.posts, currentCategory);
+	}
+
 	return {
-		postsInCategory: state.posts.categoryPosts.data,
-		categoryPostsFetched: state.posts.categoryPostsFetched,
-		currentCategory: currentCategory
+		postsInCategory: categoryPostList
 	};
 }
 
