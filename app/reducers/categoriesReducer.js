@@ -1,6 +1,6 @@
 import { FETCH_CATEGORIES, FETCH_CATEGORIES_BY_ID } from '../actions/actionTypes';
 
-const INITIAL_STATE = { categories: [], currentCategory: null, isFetched: false };
+const INITIAL_STATE = { categories: [], isFetched: false };
 
 export default function(state = INITIAL_STATE,  action) {
 	switch(action.type) {
