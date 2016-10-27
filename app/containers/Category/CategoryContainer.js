@@ -18,7 +18,6 @@ class CategoryContainer extends Component {
 		if(! this.props.postsInCategory.length) {
 			return <LoadingCircular/>
 		} else {
-		console.log(this.props.postsInCategory);
 			return (
 				<CategoryPage categoryPosts={this.props.postsInCategory} />
 			)
