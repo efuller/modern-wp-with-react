@@ -47,8 +47,12 @@ function getCategoryPosts(posts, currentCategory) {
 
 function mapStateToProps(state, ownProps) {
 	const categorySlug = ownProps.params.category;
-	const currentCategory = getCurrentCategory(state.categories.categories, categorySlug);
+	let currentCategory = null;
 	let categoryPostList = [];
+
+	if (categorySlug) {
+		currentCategory = getCurrentCategory(state.categories.categories, categorySlug);
+	}
 
 	if (state.posts.isFetched) {
 		categoryPostList = getCategoryPosts(state.posts.posts, currentCategory);
