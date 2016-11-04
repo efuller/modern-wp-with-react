@@ -19,12 +19,23 @@ class App extends Component {
 						{
 							(! this.props.navCategorySlug || ! this.props.navNextCategory )
 							? ''
-							: <ContentNavigation direction={`next`} category={this.props.navNextCategory}/>
+							: <ContentNavigation direction={`next`} type="category" destination={this.props.navNextCategory}/>
 						}
 						{
 							(! this.props.navCategorySlug || ! this.props.navPreviousCategory )
 								? ''
-								: <ContentNavigation direction={`previous`} category={this.props.navPreviousCategory}/>
+								: <ContentNavigation direction={`previous`} type="category" destination={this.props.navPreviousCategory}/>
+						}
+
+						{
+							(! this.props.navPageSlug || ! this.props.navNextPage )
+								? ''
+								: <ContentNavigation direction={`next`} type="page" destination={this.props.navNextPage}/>
+						}
+						{
+							(! this.props.navPageSlug || ! this.props.navPreviousPage )
+								? ''
+								: <ContentNavigation direction={`previous`} type="page" destination={this.props.navPreviousPage}/>
 						}
 						<main role="main">
 							{this.props.children}
@@ -38,10 +49,15 @@ class App extends Component {
 
 function mapStateToProps(state, ownProps) {
 	let navCategorySlug = ownProps.params.category;
+	let navPageSlug = ownProps.params.slug;
 	let currentIndex = '';
+	let currentPageIndex = '';
 	let navCurrentCategory = '';
+	let navCurrentPage = '';
 	let navNextCategory = '';
+	let navNextPage = '';
 	let navPreviousCategory = '';
+	let navPreviousPage = '';
 
 	if (navCategorySlug) {
 		navCurrentCategory = Utils.getCurrent(state.categories.categories, navCategorySlug);
@@ -50,11 +66,29 @@ function mapStateToProps(state, ownProps) {
 		navPreviousCategory = Utils.getPrevious(state.categories.categories, currentIndex);
 	}
 
+	if (navPageSlug) {
+		navCurrentPage = Utils.getCurrent(state.posts.posts, navPageSlug);
+		currentPageIndex = Utils.getIndex(state.posts.posts, navCurrentPage);
+		navNextPage = Utils.getNext(state.posts.posts, currentPageIndex);
+		navPreviousPage = Utils.getPrevious(state.posts.posts, currentPageIndex);
+
+		console.log('currentPage:', navCurrentPage);
+		console.log('currentPageIndex:', currentPageIndex);
+		console.log('navNextPage', navNextPage);
+		console.log('navPreviousPage', navPreviousPage);
+	}
+
 	return {
 		categories: state.categories.categories,
+		posts: state.posts.posts,
 		navCategorySlug,
 		navNextCategory,
-		navPreviousCategory
+		navPreviousCategory,
+		navPageSlug,
+		currentPageIndex,
+		navCurrentPage,
+		navNextPage,
+		navPreviousPage
 	}
 }
 
