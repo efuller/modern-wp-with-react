@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FETCH_CATEGORIES } from './actionTypes';
 
-const ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
+const ROOT_URL = 'http://wpapi.dev/wp-json/wp/v2';
 
 export function fetchCategoriesSuccess(categories) {
 	return {
