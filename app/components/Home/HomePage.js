@@ -4,6 +4,11 @@ import { Link } from 'react-router';
 function PostCard({post}) {
 	return (
 		<article className="card">
+			{
+				(post.thumbnail)
+				? <figure className="featured-image"><img src={post.thumbnail} alt={post.title.rendered}/></figure>
+				: ''
+			}
 			<Link to={`/story/${post.slug}`}>
 				<h2 className="post-title">{post.title.rendered}</h2>
 			</Link>
