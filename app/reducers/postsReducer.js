@@ -1,9 +1,4 @@
-import {
-    FETCH_POSTS,
-    FETCH_POST,
-    RESET_POST,
-	FETCH_POSTS_BY_CATEGORY_ID,
-	RESET_CATEGORY_POSTS } from '../actions/actionTypes';
+import { FETCH_POSTS } from '../actions/actionTypes';
 
 const INITIAL_STATE = { posts: [], post: null, isFetched: false };
 

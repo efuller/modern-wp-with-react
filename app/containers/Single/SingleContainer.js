@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from '../../actions/postActions';
 import LoadingCircular from '../../components/elements/CircularProgress';
 import SinglePost from '../../components/SinglePost/SinglePost';
 
@@ -30,8 +28,8 @@ class SingleContainer extends Component {
 }
 
 function getPostByID(posts, slug) {
-	const course = posts.filter(post => post.slug == slug);
-	if (course.length) return course[0];
+	const course = posts.filter(post => post.slug === slug);
+	if (course.length) { return course[0]; }
 	return null;
 }
 

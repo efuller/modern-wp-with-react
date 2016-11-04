@@ -1,4 +1,4 @@
-import { FETCH_CATEGORIES, FETCH_CATEGORIES_BY_ID } from '../actions/actionTypes';
+import { FETCH_CATEGORIES } from '../actions/actionTypes';
 
 const INITIAL_STATE = { categories: [], isFetched: false };
 

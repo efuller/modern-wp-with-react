@@ -1,6 +1,5 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import { Link } from 'react-router';
 
 function PostCard({post}) {
 	return (

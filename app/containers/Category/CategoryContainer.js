@@ -34,14 +34,14 @@ class CategoryContainer extends Component {
 }
 
 function getCurrentCategory(categories, categorySlug) {
-	const category = categories.filter(category => category.slug == categorySlug);
-	if (category.length) return category[0];
+	const category = categories.filter(category => category.slug === categorySlug);
+	if (category.length) { return category[0]; }
 	return null;
 }
 
 function getCategoryPosts(posts, currentCategory) {
-	const categoryPosts = posts.filter(post => post.categories[0] == currentCategory.id);
-	if (categoryPosts.length) return categoryPosts;
+	const categoryPosts = posts.filter(post => post.categories[0] === currentCategory.id);
+	if (categoryPosts.length) { return categoryPosts; }
 	return null;
 }
 

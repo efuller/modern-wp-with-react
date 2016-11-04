@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
 
