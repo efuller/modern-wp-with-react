@@ -26,7 +26,7 @@ class CategoryContainer extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="content-container">
 				{this.renderPost()}
 			</div>
 		)

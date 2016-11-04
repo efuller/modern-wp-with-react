@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -11,38 +10,36 @@ class App extends Component {
 
 	render() {
 		return (
-			<MuiThemeProvider>
-				<div>
-					<Header/>
-					<Navigation categories={this.props.categories} navCategorySlug={this.props.navCategorySlug} />
-					<div className="container">
-						{
-							(! this.props.navCategorySlug || ! this.props.navNextCategory )
+			<div>
+				<Header/>
+				<Navigation categories={this.props.categories} navCategorySlug={this.props.navCategorySlug} />
+				<div className="container">
+					{
+						(! this.props.navCategorySlug || ! this.props.navNextCategory )
+						? ''
+						: <ContentNavigation direction="next" type="category" destination={this.props.navNextCategory}/>
+					}
+					{
+						(! this.props.navCategorySlug || ! this.props.navPreviousCategory )
 							? ''
-							: <ContentNavigation direction="next" type="category" destination={this.props.navNextCategory}/>
-						}
-						{
-							(! this.props.navCategorySlug || ! this.props.navPreviousCategory )
-								? ''
-								: <ContentNavigation direction="previous" type="category" destination={this.props.navPreviousCategory}/>
-						}
+							: <ContentNavigation direction="previous" type="category" destination={this.props.navPreviousCategory}/>
+					}
 
-						{
-							(! this.props.navPageSlug || ! this.props.navNextPage )
-								? ''
-								: <ContentNavigation direction="next" type="page" destination={this.props.navNextPage}/>
-						}
-						{
-							(! this.props.navPageSlug || ! this.props.navPreviousPage )
-								? ''
-								: <ContentNavigation direction="previous" type="page" destination={this.props.navPreviousPage}/>
-						}
-						<main role="main">
-							{this.props.children}
-						</main>
-					</div>
+					{
+						(! this.props.navPageSlug || ! this.props.navNextPage )
+							? ''
+							: <ContentNavigation direction="next" type="page" destination={this.props.navNextPage}/>
+					}
+					{
+						(! this.props.navPageSlug || ! this.props.navPreviousPage )
+							? ''
+							: <ContentNavigation direction="previous" type="page" destination={this.props.navPreviousPage}/>
+					}
+					<main role="main">
+						{this.props.children}
+					</main>
 				</div>
-			</MuiThemeProvider>
+			</div>
 		)
 	}
 }

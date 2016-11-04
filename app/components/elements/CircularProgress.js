@@ -1,15 +1,9 @@
 import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
-
-const styles = {
-    circle: {
-        left: '45%',
-        top: '250px'
-    }
-};
 
 const LoadingCircular = () => (
-    <CircularProgress style={styles.circle} size={1} color="#FF5722" />
+    <div>
+	    <h3>Loading...</h3>
+    </div>
 );
 
 export default LoadingCircular;
