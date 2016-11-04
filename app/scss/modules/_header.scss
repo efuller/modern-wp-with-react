@@ -1,3 +1,21 @@
 //--------------------------------------------------------------
 // Header
 //--------------------------------------------------------------
+.site-header {
+	@include size(100% 80px);
+
+	align-items: center;
+	background-color: $color-black-bunker;
+	border-bottom: 1px solid $color-divider;
+	color: $color-white-gallery;
+	display: flex;
+	justify-content: center;
+
+	a {
+		color: $color-white-gallery;
+
+		&:hover {
+			color: darken($color-white-gallery, 10%);
+		}
+	}
+}

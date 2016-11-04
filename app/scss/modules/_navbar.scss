@@ -1,12 +1,67 @@
+//--------------------------------------------------------------
+// Navbar
+//--------------------------------------------------------------
 .navbar-container {
-	background: purple;
+	background: $color-black-bunker;
 }
 
+// Primary navigation.
 .navbar {
+	@include size(100% 40px);
+
+	display: flex;
 	margin-top: 0;
+	justify-content: center;
+
+	.menu {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			align-self: center;
+			border-left: 1px solid $color-divider;
+			border-right: 1px solid $color-divider;
+			height: 40px;
+			padding: 0 15px;
+		}
+
+		a {
+			color: $color-white;
+			display: block;
+			font-size: 12px;
+			font-weight: 700;
+			height: 40px;
+			line-height: 40px;
+			text-decoration: none;
+			text-transform: uppercase;
+
+
+			&:visited {
+				color: $color-white;
+			}
+
+			&:hover,
+			&:focus,
+			&:active {
+				color: $color-white;
+			}
+		}
+	}
 }
 
-.menu {
-	margin: 0;
-	padding: 0;
+//--------------------------------------------------------------
+// Category and Post Navigation
+//--------------------------------------------------------------
+.content-link {
+	@include position(fixed, 300px null null null);
+
+	&.previous {
+		left: 0;
+	}
+
+	&.next {
+		right: 0;
+	}
 }

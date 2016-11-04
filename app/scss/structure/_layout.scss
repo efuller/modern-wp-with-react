@@ -5,5 +5,10 @@
 .container {
 	@include outer-container;
 
-	margin-top: $gutter * 2;
+	&.content {
+		border-left: 1px solid $color-divider;
+		border-right: 1px solid $color-divider;
+		min-height: 100vh;
+		position: relative;
+	}
 }
