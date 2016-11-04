@@ -61,8 +61,6 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(167);
-
 	var _reactRedux = __webpack_require__(226);
 
 	var _configureStore = __webpack_require__(251);
@@ -77,12 +75,14 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
+	__webpack_require__(500);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Styles
-	var styles = __webpack_require__(498);
-
 	_configureStore2.default.dispatch((0, _categoryActions.fetchCategories)());
+
+	// Styles
+
 	_configureStore2.default.dispatch((0, _postActions.fetchPosts)());
 
 	var Root = function Root() {
@@ -97,7 +97,7 @@
 	    );
 	};
 
-	_reactDom2.default.render(_react2.default.createElement(Root, null), document.getElementById("app"));
+	_reactDom2.default.render(_react2.default.createElement(Root, null), document.getElementById('app'));
 
 /***/ },
 /* 2 */
@@ -27660,12 +27660,11 @@
 	 * this state is discouraged.
 	 */
 	function routerReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 
-	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	  var type = _ref.type;
-	  var payload = _ref.payload;
+	  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+	      type = _ref.type,
+	      payload = _ref.payload;
 
 	  if (type === LOCATION_CHANGE) {
 	    return _extends({}, state, { locationBeforeTransitions: payload });
@@ -27757,12 +27756,11 @@
 	 * correct router state.
 	 */
 	function syncHistoryWithStore(history, store) {
-	  var _ref = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	  var _ref$selectLocationSt = _ref.selectLocationState;
-	  var selectLocationState = _ref$selectLocationSt === undefined ? defaultSelectLocationState : _ref$selectLocationSt;
-	  var _ref$adjustUrlOnRepla = _ref.adjustUrlOnReplay;
-	  var adjustUrlOnReplay = _ref$adjustUrlOnRepla === undefined ? true : _ref$adjustUrlOnRepla;
+	  var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+	      _ref$selectLocationSt = _ref.selectLocationState,
+	      selectLocationState = _ref$selectLocationSt === undefined ? defaultSelectLocationState : _ref$selectLocationSt,
+	      _ref$adjustUrlOnRepla = _ref.adjustUrlOnReplay,
+	      adjustUrlOnReplay = _ref$adjustUrlOnRepla === undefined ? true : _ref$adjustUrlOnRepla;
 
 	  // Ensure that the reducer is mounted on the store and functioning properly.
 	  if (typeof selectLocationState(store.getState()) === 'undefined') {
@@ -27773,6 +27771,7 @@
 	  var isTimeTraveling = void 0;
 	  var unsubscribeFromStore = void 0;
 	  var unsubscribeFromHistory = void 0;
+	  var currentLocation = void 0;
 
 	  // What does the store say about current location?
 	  var getLocationInStore = function getLocationInStore(useInitialIfEmpty) {
@@ -27780,14 +27779,14 @@
 	    return locationState.locationBeforeTransitions || (useInitialIfEmpty ? initialLocation : undefined);
 	  };
 
-	  // Init currentLocation with potential location in store
-	  var currentLocation = getLocationInStore();
+	  // Init initialLocation with potential location in store
+	  initialLocation = getLocationInStore();
 
 	  // If the store is replayed, update the URL in the browser to match.
 	  if (adjustUrlOnReplay) {
 	    var handleStoreChange = function handleStoreChange() {
 	      var locationInStore = getLocationInStore(true);
-	      if (currentLocation === locationInStore) {
+	      if (currentLocation === locationInStore || initialLocation === locationInStore) {
 	        return;
 	      }
 
@@ -27833,10 +27832,14 @@
 	  };
 	  unsubscribeFromHistory = history.listen(handleLocationChange);
 
+	  // support history 3.x
+	  if (history.getCurrentLocation) {
+	    handleLocationChange(history.getCurrentLocation());
+	  }
+
 	  // The enhanced history uses store as source of truth
 	  return _extends({}, history, {
 	    // The listeners are subscribed to the store instead of history
-
 	    listen: function listen(listener) {
 	      // Copy of last location.
 	      var lastPublishedLocation = getLocationInStore(true);
@@ -27913,9 +27916,9 @@
 	          return next(action);
 	        }
 
-	        var _action$payload = action.payload;
-	        var method = _action$payload.method;
-	        var args = _action$payload.args;
+	        var _action$payload = action.payload,
+	            method = _action$payload.method,
+	            args = _action$payload.args;
 
 	        history[method].apply(history, _toConsumableArray(args));
 	      };
@@ -28067,7 +28070,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
+	var ROOT_URL = 'http://wpapi.dev/wp-json/wp/v2';
 
 	function fetchCategoriesSuccess(categories) {
 		return {
@@ -29240,7 +29243,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ROOT_URL = "http://wpapi.dev/wp-json/wp/v2";
+	var ROOT_URL = 'http://wpapi.dev/wp-json/wp/v2';
 	//const ROOT_URL = "http://api.ericfuller.net/wp-json/wp/v2";
 
 	function fetchPosts() {
@@ -29308,15 +29311,15 @@
 
 	var _AppContainer3 = _interopRequireDefault(_AppContainer2);
 
-	var _HomeContainer2 = __webpack_require__(489);
+	var _HomeContainer2 = __webpack_require__(491);
 
 	var _HomeContainer3 = _interopRequireDefault(_HomeContainer2);
 
-	var _CategoryContainer2 = __webpack_require__(494);
+	var _CategoryContainer2 = __webpack_require__(496);
 
 	var _CategoryContainer3 = _interopRequireDefault(_CategoryContainer2);
 
-	var _SingleContainer2 = __webpack_require__(496);
+	var _SingleContainer2 = __webpack_require__(498);
 
 	var _SingleContainer3 = _interopRequireDefault(_SingleContainer2);
 
@@ -29357,11 +29360,11 @@
 
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 
-	var _ContentNavigation = __webpack_require__(501);
+	var _ContentNavigation = __webpack_require__(489);
 
 	var _ContentNavigation2 = _interopRequireDefault(_ContentNavigation);
 
-	var _utils = __webpack_require__(500);
+	var _utils = __webpack_require__(490);
 
 	var Utils = _interopRequireWildcard(_utils);
 
@@ -29440,11 +29443,6 @@
 			currentPageIndex = Utils.getIndex(state.posts.posts, navCurrentPage);
 			navNextPage = Utils.getNext(state.posts.posts, currentPageIndex);
 			navPreviousPage = Utils.getPrevious(state.posts.posts, currentPageIndex);
-
-			console.log('currentPage:', navCurrentPage);
-			console.log('currentPageIndex:', currentPageIndex);
-			console.log('navNextPage', navNextPage);
-			console.log('navPreviousPage', navPreviousPage);
 		}
 
 		return {
@@ -40932,6 +40930,83 @@
 		value: true
 	});
 
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(167);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function ContentNavigation(props) {
+		return _react2.default.createElement(
+			'div',
+			{ className: 'category-link ' + (props.direction === 'next' ? 'next' : 'previous') },
+			props.type === 'category' ? _react2.default.createElement(
+				_reactRouter.Link,
+				{ to: '/category/' + props.destination.slug },
+				props.destination.name
+			) : _react2.default.createElement(
+				_reactRouter.Link,
+				{ to: '/story/' + props.destination.slug },
+				props.destination.title.rendered
+			)
+		);
+	}
+
+	exports.default = ContentNavigation;
+
+/***/ },
+/* 490 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.getNext = getNext;
+	exports.getPrevious = getPrevious;
+	exports.getCurrent = getCurrent;
+	exports.getIndex = getIndex;
+	function getNext(items, index) {
+		if (items[index + 1]) {
+			return items[index + 1];
+		}
+	}
+
+	function getPrevious(items, index) {
+		if (items[index - 1]) {
+			return items[index - 1];
+		}
+	}
+
+	function getCurrent(items, name) {
+		var navCurrentCategory = items.filter(function (item) {
+			return item.slug === name;
+		});
+		if (navCurrentCategory) {
+			return navCurrentCategory[0];
+		}
+		return null;
+	}
+
+	function getIndex(items, current) {
+		return items.findIndex(function (item) {
+			return item.slug === current.slug;
+		});
+	}
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
@@ -40944,11 +41019,11 @@
 
 	var actions = _interopRequireWildcard(_postActions);
 
-	var _CircularProgress = __webpack_require__(490);
+	var _CircularProgress = __webpack_require__(492);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
-	var _HomePage = __webpack_require__(493);
+	var _HomePage = __webpack_require__(495);
 
 	var _HomePage2 = _interopRequireDefault(_HomePage);
 
@@ -41001,10 +41076,10 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(HomeContainer);
 
 /***/ },
-/* 490 */
+/* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -41014,7 +41089,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CircularProgress = __webpack_require__(491);
+	var _CircularProgress = __webpack_require__(493);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -41028,13 +41103,13 @@
 	};
 
 	var LoadingCircular = function LoadingCircular() {
-	    return _react2.default.createElement(_CircularProgress2.default, { style: styles.circle, size: 1, color: "#FF5722" });
+	    return _react2.default.createElement(_CircularProgress2.default, { style: styles.circle, size: 1, color: '#FF5722' });
 	};
 
 	exports.default = LoadingCircular;
 
 /***/ },
-/* 491 */
+/* 493 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41044,7 +41119,7 @@
 	});
 	exports.default = undefined;
 
-	var _CircularProgress = __webpack_require__(492);
+	var _CircularProgress = __webpack_require__(494);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -41055,7 +41130,7 @@
 	exports.default = _CircularProgress2.default;
 
 /***/ },
-/* 492 */
+/* 494 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41336,7 +41411,7 @@
 	exports.default = CircularProgress;
 
 /***/ },
-/* 493 */
+/* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41402,7 +41477,7 @@
 	exports.default = HomePage;
 
 /***/ },
-/* 494 */
+/* 496 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41425,11 +41500,11 @@
 
 	var actions = _interopRequireWildcard(_postActions);
 
-	var _CircularProgress = __webpack_require__(490);
+	var _CircularProgress = __webpack_require__(492);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
-	var _CategoryPage = __webpack_require__(495);
+	var _CategoryPage = __webpack_require__(497);
 
 	var _CategoryPage2 = _interopRequireDefault(_CategoryPage);
 
@@ -41482,17 +41557,21 @@
 
 	function getCurrentCategory(categories, categorySlug) {
 		var category = categories.filter(function (category) {
-			return category.slug == categorySlug;
+			return category.slug === categorySlug;
 		});
-		if (category.length) return category[0];
+		if (category.length) {
+			return category[0];
+		}
 		return null;
 	}
 
 	function getCategoryPosts(posts, currentCategory) {
 		var categoryPosts = posts.filter(function (post) {
-			return post.categories[0] == currentCategory.id;
+			return post.categories[0] === currentCategory.id;
 		});
-		if (categoryPosts.length) return categoryPosts;
+		if (categoryPosts.length) {
+			return categoryPosts;
+		}
 		return null;
 	}
 
@@ -41523,7 +41602,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CategoryContainer);
 
 /***/ },
-/* 495 */
+/* 497 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41589,7 +41668,7 @@
 	exports.default = CategoryPage;
 
 /***/ },
-/* 496 */
+/* 498 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41606,21 +41685,13 @@
 
 	var _reactRedux = __webpack_require__(226);
 
-	var _redux = __webpack_require__(233);
-
-	var _postActions = __webpack_require__(281);
-
-	var actions = _interopRequireWildcard(_postActions);
-
-	var _CircularProgress = __webpack_require__(490);
+	var _CircularProgress = __webpack_require__(492);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
-	var _SinglePost = __webpack_require__(497);
+	var _SinglePost = __webpack_require__(499);
 
 	var _SinglePost2 = _interopRequireDefault(_SinglePost);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41664,9 +41735,11 @@
 
 	function getPostByID(posts, slug) {
 		var course = posts.filter(function (post) {
-			return post.slug == slug;
+			return post.slug === slug;
 		});
-		if (course.length) return course[0];
+		if (course.length) {
+			return course[0];
+		}
 		return null;
 	}
 
@@ -41688,7 +41761,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(SingleContainer);
 
 /***/ },
-/* 497 */
+/* 499 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41704,8 +41777,6 @@
 	var _Paper = __webpack_require__(486);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
-
-	var _reactRouter = __webpack_require__(167);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41741,86 +41812,10 @@
 	exports.default = SinglePost;
 
 /***/ },
-/* 498 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 499 */,
 /* 500 */
 /***/ function(module, exports) {
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.getNext = getNext;
-	exports.getPrevious = getPrevious;
-	exports.getCurrent = getCurrent;
-	exports.getIndex = getIndex;
-	function getNext(items, index) {
-		if (items[index + 1]) {
-			return items[index + 1];
-		}
-	}
-
-	function getPrevious(items, index) {
-		if (items[index - 1]) {
-			return items[index - 1];
-		}
-	}
-
-	function getCurrent(items, name) {
-		var navCurrentCategory = items.filter(function (item) {
-			return item.slug == name;
-		});
-		if (navCurrentCategory) return navCurrentCategory[0];
-		return null;
-	}
-
-	function getIndex(items, current) {
-		return items.findIndex(function (item) {
-			return item.slug == current.slug;
-		});
-	}
-
-/***/ },
-/* 501 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(167);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function ContentNavigation(props) {
-		return _react2.default.createElement(
-			'div',
-			{ className: 'category-link ' + (props.direction === 'next' ? 'next' : 'previous') },
-			props.type === 'category' ? _react2.default.createElement(
-				_reactRouter.Link,
-				{ to: '/category/' + props.destination.slug },
-				props.destination.name
-			) : _react2.default.createElement(
-				_reactRouter.Link,
-				{ to: '/story/' + props.destination.slug },
-				props.destination.title.rendered
-			)
-		);
-	}
-
-	exports.default = ContentNavigation;
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);
