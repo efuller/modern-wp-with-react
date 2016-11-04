@@ -29357,6 +29357,16 @@
 
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 
+	var _ContentNavigation = __webpack_require__(501);
+
+	var _ContentNavigation2 = _interopRequireDefault(_ContentNavigation);
+
+	var _utils = __webpack_require__(500);
+
+	var Utils = _interopRequireWildcard(_utils);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29384,10 +29394,14 @@
 						'div',
 						null,
 						_react2.default.createElement(_Header2.default, null),
-						_react2.default.createElement(_Navigation2.default, { categories: this.props.categories }),
+						_react2.default.createElement(_Navigation2.default, { categories: this.props.categories, navCategorySlug: this.props.navCategorySlug }),
 						_react2.default.createElement(
 							'div',
 							{ className: 'container' },
+							!this.props.navCategorySlug || !this.props.navNextCategory ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'next', type: 'category', destination: this.props.navNextCategory }),
+							!this.props.navCategorySlug || !this.props.navPreviousCategory ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'previous', type: 'category', destination: this.props.navPreviousCategory }),
+							!this.props.navPageSlug || !this.props.navNextPage ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'next', type: 'page', destination: this.props.navNextPage }),
+							!this.props.navPageSlug || !this.props.navPreviousPage ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'previous', type: 'page', destination: this.props.navPreviousPage }),
 							_react2.default.createElement(
 								'main',
 								{ role: 'main' },
@@ -29402,9 +29416,48 @@
 		return App;
 	}(_react.Component);
 
-	function mapStateToProps(state) {
+	function mapStateToProps(state, ownProps) {
+		var navCategorySlug = ownProps.params.category;
+		var navPageSlug = ownProps.params.slug;
+		var currentIndex = '';
+		var currentPageIndex = '';
+		var navCurrentCategory = '';
+		var navCurrentPage = '';
+		var navNextCategory = '';
+		var navNextPage = '';
+		var navPreviousCategory = '';
+		var navPreviousPage = '';
+
+		if (navCategorySlug) {
+			navCurrentCategory = Utils.getCurrent(state.categories.categories, navCategorySlug);
+			currentIndex = Utils.getIndex(state.categories.categories, navCurrentCategory);
+			navNextCategory = Utils.getNext(state.categories.categories, currentIndex);
+			navPreviousCategory = Utils.getPrevious(state.categories.categories, currentIndex);
+		}
+
+		if (navPageSlug) {
+			navCurrentPage = Utils.getCurrent(state.posts.posts, navPageSlug);
+			currentPageIndex = Utils.getIndex(state.posts.posts, navCurrentPage);
+			navNextPage = Utils.getNext(state.posts.posts, currentPageIndex);
+			navPreviousPage = Utils.getPrevious(state.posts.posts, currentPageIndex);
+
+			console.log('currentPage:', navCurrentPage);
+			console.log('currentPageIndex:', currentPageIndex);
+			console.log('navNextPage', navNextPage);
+			console.log('navPreviousPage', navPreviousPage);
+		}
+
 		return {
-			categories: state.categories.categories
+			categories: state.categories.categories,
+			posts: state.posts.posts,
+			navCategorySlug: navCategorySlug,
+			navNextCategory: navNextCategory,
+			navPreviousCategory: navPreviousCategory,
+			navPageSlug: navPageSlug,
+			currentPageIndex: currentPageIndex,
+			navCurrentPage: navCurrentPage,
+			navNextPage: navNextPage,
+			navPreviousPage: navPreviousPage
 		};
 	}
 
@@ -41445,8 +41498,12 @@
 
 	function mapStateToProps(state, ownProps) {
 		var categorySlug = ownProps.params.category;
-		var currentCategory = getCurrentCategory(state.categories.categories, categorySlug);
+		var currentCategory = null;
 		var categoryPostList = [];
+
+		if (categorySlug) {
+			currentCategory = getCurrentCategory(state.categories.categories, categorySlug);
+		}
 
 		if (state.posts.isFetched) {
 			categoryPostList = getCategoryPosts(state.posts.posts, currentCategory);
@@ -41688,6 +41745,82 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 499 */,
+/* 500 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.getNext = getNext;
+	exports.getPrevious = getPrevious;
+	exports.getCurrent = getCurrent;
+	exports.getIndex = getIndex;
+	function getNext(items, index) {
+		if (items[index + 1]) {
+			return items[index + 1];
+		}
+	}
+
+	function getPrevious(items, index) {
+		if (items[index - 1]) {
+			return items[index - 1];
+		}
+	}
+
+	function getCurrent(items, name) {
+		var navCurrentCategory = items.filter(function (item) {
+			return item.slug == name;
+		});
+		if (navCurrentCategory) return navCurrentCategory[0];
+		return null;
+	}
+
+	function getIndex(items, current) {
+		return items.findIndex(function (item) {
+			return item.slug == current.slug;
+		});
+	}
+
+/***/ },
+/* 501 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(167);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function ContentNavigation(props) {
+		return _react2.default.createElement(
+			'div',
+			{ className: 'category-link ' + (props.direction === 'next' ? 'next' : 'previous') },
+			props.type === 'category' ? _react2.default.createElement(
+				_reactRouter.Link,
+				{ to: '/category/' + props.destination.slug },
+				props.destination.name
+			) : _react2.default.createElement(
+				_reactRouter.Link,
+				{ to: '/story/' + props.destination.slug },
+				props.destination.title.rendered
+			)
+		);
+	}
+
+	exports.default = ContentNavigation;
 
 /***/ }
 /******/ ]);
