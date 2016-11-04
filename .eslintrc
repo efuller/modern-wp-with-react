@@ -6,18 +6,24 @@
     "es6": true
   },
   "parserOptions": {
-    "sourceType": "module",
+    "ecmaVersion": 6,
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "modules": true
     }
+  },
+  "globals": {
+    "WP_API": true
   },
   "extends": "wordpress",
   "installedESLint": true,
   "plugins": [
-    "react"
+    "react",
+    "import"
   ],
   "rules": {
     "react/jsx-uses-vars": [2],
-    "react/jsx-uses-react": [2]
+    "react/jsx-uses-react": [2],
+    "import/prefer-default-export": "off"
   }
 }
