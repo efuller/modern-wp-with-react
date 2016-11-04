@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 function ContentNavigation(props) {
 	return (
-		<div className={`category-link ${props.direction === 'next' ? 'next' : 'previous'}`}>
+		<div className={`content-link ${props.direction === 'next' ? 'next' : 'previous'}`}>
 			{
 				props.type === 'category'
 				? <Link to={`/category/${props.destination.slug}`}>{props.destination.name}</Link>

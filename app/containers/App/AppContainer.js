@@ -13,7 +13,7 @@ class App extends Component {
 			<div>
 				<Header/>
 				<Navigation categories={this.props.categories} navCategorySlug={this.props.navCategorySlug} />
-				<div className="container">
+				<div className="container content">
 					{
 						(! this.props.navCategorySlug || ! this.props.navNextCategory )
 						? ''

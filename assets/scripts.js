@@ -29393,7 +29393,7 @@
 					_react2.default.createElement(_Navigation2.default, { categories: this.props.categories, navCategorySlug: this.props.navCategorySlug }),
 					_react2.default.createElement(
 						'div',
-						{ className: 'container' },
+						{ className: 'container content' },
 						!this.props.navCategorySlug || !this.props.navNextCategory ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'next', type: 'category', destination: this.props.navNextCategory }),
 						!this.props.navCategorySlug || !this.props.navPreviousCategory ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'previous', type: 'category', destination: this.props.navPreviousCategory }),
 						!this.props.navPageSlug || !this.props.navNextPage ? '' : _react2.default.createElement(_ContentNavigation2.default, { direction: 'next', type: 'page', destination: this.props.navNextPage }),
@@ -29479,9 +29479,13 @@
 				'div',
 				{ className: 'site-branding' },
 				_react2.default.createElement(
-					_reactRouter.Link,
-					{ to: '/' },
-					'Modern WP with React'
+					'h1',
+					null,
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: '/' },
+						'Modern WP with React'
+					)
 				)
 			)
 		);
@@ -29568,7 +29572,7 @@
 	function ContentNavigation(props) {
 		return _react2.default.createElement(
 			'div',
-			{ className: 'category-link ' + (props.direction === 'next' ? 'next' : 'previous') },
+			{ className: 'content-link ' + (props.direction === 'next' ? 'next' : 'previous') },
 			props.type === 'category' ? _react2.default.createElement(
 				_reactRouter.Link,
 				{ to: '/category/' + props.destination.slug },
@@ -29756,6 +29760,11 @@
 		return _react2.default.createElement(
 			'article',
 			{ className: 'card' },
+			post.thumbnail ? _react2.default.createElement(
+				'figure',
+				{ className: 'featured-image' },
+				_react2.default.createElement('img', { src: post.thumbnail, alt: post.title.rendered })
+			) : '',
 			_react2.default.createElement(
 				_reactRouter.Link,
 				{ to: '/story/' + post.slug },
