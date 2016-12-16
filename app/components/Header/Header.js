@@ -1,14 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 const Header = () => {
 	return (
-		<header className="site-header">
-			<div className="site-branding">
-				<h1>
-					<Link to="/">Modern WP with React</Link>
-				</h1>
-			</div>
+		<header className="bg-white black-80 tc pv4 avenir">
+			<h1 className="mt2 mb0 baskerville i fw1 f1">Modern WordPress</h1>
+			<h2 className="mt2 mb0 f6 fw4 ttu tracked">Powered by React & Redux</h2>
 		</header>
 	)
 };
