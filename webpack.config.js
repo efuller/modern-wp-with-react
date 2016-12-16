@@ -21,7 +21,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: '/node_modules/',
-                loader: "babel-loader"
+                loader: 'babel-loader'
             },
             {
                 test: /\.(css|scss)$/,
@@ -41,5 +41,6 @@ module.exports = {
         new ExtractTextPlugin("style.css", {
             allChunks: true
         })
-    ]
+    ],
+	devtool: 'inline-source-map'
 };
