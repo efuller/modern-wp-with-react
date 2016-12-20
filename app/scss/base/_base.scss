@@ -1,10 +1,29 @@
 //--------------------------------------------------------------
 // Base styles
 //--------------------------------------------------------------
-a {
-	transition: all .3s ease;
+.container {
+
+	&.content {
+		position: relative;
+	}
 }
 
-.site-content {
-	min-height: 100vh;
+header {
+
+	a,
+	a:hover,
+	a:visited {
+		text-decoration: none;
+	}
 }
+
+nav {
+
+	a.active-link,
+	a:hover,
+	a.active-link:visited,
+	a.active-link:active {
+		background-color: rgba(0,0,0, 0.1);
+	}
+}
+

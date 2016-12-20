@@ -1,0 +1,23 @@
+.content-link {
+	font-size: 40px;
+	position: absolute;
+	top: -46px;
+
+	@media (min-width: 1024px) {
+		font-size: 60px;
+		position: fixed;
+		top: initial;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	&.next {
+		right: 3%;
+	}
+
+	&.previous {
+		left: 3%;
+	}
+}
