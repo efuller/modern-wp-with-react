@@ -20,9 +20,9 @@ class SingleContainer extends Component {
 
 	render() {
 		return (
-			<div className="content-container">
-				{this.renderPost()}
-			</div>
+			<section className="mw8 center avenir">
+			{this.renderPost()}
+			</section>
 		)
 	}
 }
