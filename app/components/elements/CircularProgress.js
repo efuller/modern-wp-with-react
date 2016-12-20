@@ -1,9 +1,9 @@
 import React from 'react';
 
 const LoadingCircular = () => (
-    <div>
-	    <h3>Loading...</h3>
-    </div>
+    <div className="loader">
+		Loading...
+	</div>
 );
 
 export default LoadingCircular;
