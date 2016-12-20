@@ -19,16 +19,16 @@ class CategoryContainer extends Component {
 			return <LoadingCircular/>
 		} else {
 			return (
-				<CategoryPage categoryPosts={this.props.postsInCategory} />
+				<CategoryPage currentCategory={this.props.currentCategory} categoryPosts={this.props.postsInCategory} />
 			)
 		}
 	}
 
 	render() {
 		return (
-			<div className="content-container">
-				{this.renderPost()}
-			</div>
+			<section className="mw8 center avenir">
+			{this.renderPost()}
+			</section>
 		)
 	}
 }
@@ -59,7 +59,8 @@ function mapStateToProps(state, ownProps) {
 	}
 
 	return {
-		postsInCategory: categoryPostList
+		postsInCategory: categoryPostList,
+		currentCategory
 	};
 }
 
