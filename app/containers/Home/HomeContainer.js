@@ -8,7 +8,7 @@ class HomeContainer extends Component {
 
 	renderPost() {
 		if(! this.props.isFetched) {
-			return <LoadingCircular/>
+			return <LoadingCircular />
 		} else {
 			return (
 				<HomePage posts={this.props.posts} />
@@ -18,9 +18,9 @@ class HomeContainer extends Component {
 
 	render() {
 		return (
-			<div className="content-container">
+			<section className="mw8 center avenir">
 			{this.renderPost()}
-			</div>
+			</section>
 		)
 	}
 }
