@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
 import ContentNavigation from '../../components/Navigation/ContentNavigation';
+import Footer from '../../components/Footer/Footer';
 import * as Utils from '../../helpers/utils';
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
 					<main role="main">
 						{this.props.children}
 					</main>
+					<Footer />
 				</div>
 			</div>
 		)
